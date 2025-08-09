@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Text ↔ Morse Translator</title>
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta name="description" content="Convert text to Morse code and Morse code to text." />
+  <style>
+    .textarea-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    #text_output {
+      width: 100%;
+      box-sizing: border-box;
+      padding-right: 2rem;
+    }
+
+    #copyBtn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      color: inherit;
+      padding: 0;
+      line-height: 1;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    #copyBtn:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Text ↔ Morse Translator</h1>
+  </header>
+
+  <main>
+    <form action="{{ url_for('translation') }}" method="POST" novalidate>
+      <fieldset>
+        <legend class="sr-only">Translation Panels</legend>
+
+        <div class="panes">
+          <!-- Input -->
+          <div class="pane">
+            <label for="input">Text</label>
+            <textarea
+              id="input"
+              name="input"
+              rows="8"
+              placeholder="Type a sentence in text or morse"
+              aria-describedby="text_help"
+              autofocus>{{ input_value }}</textarea>
+          </div>
+
+          <!-- Translation -->
+          <div class="pane">
+            <label for="text_output">Morse</label>
+            <div class="textarea-container">
+              <textarea
+                id="text_output"
+                name="text_output"
+                rows="8"
+                aria-describedby="morse_help"
+                readonly>{{ translation }}</textarea>
+              <button type="button" id="copyBtn" title="Copy to clipboard">📋</button>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="submit" name="direction" value="text_to_morse">Text → Morse</button>
+        <button type="submit" name="direction" value="morse_to_text">Morse → Text</button>
+        <button type="submit" formaction="{{ url_for('clear') }}" formmethod='POST'>Clear</button>
+      </div>
+    </form>
+  </main>
+
+  <script>
+    document.getElementById("copyBtn").addEventListener("click", function() {
+      const output = document.getElementById("text_output");
+      output.select();
+      output.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(output.value)
+        .catch(err => console.error("Failed to copy text:", err));
+    });
+  </script>
+</body>
+</html>

@@ -13,6 +13,7 @@ A Flask-based web application that converts between regular text and morse code,
 ---
 
 ## Project Structure
+```
 morse-code-translator/
 │── data/ # Contains morse_code.csv
 │── static/ # CSS and favicon.png
@@ -22,6 +23,7 @@ morse-code-translator/
 │── README.md # Project documentation
 │── requirements.txt # Python dependencies
 │── LICENSE # Project license (MIT)
+```
 
 ---
 
@@ -65,5 +67,5 @@ morse-code-translator/
 ---
 
 ## License
-This project is licensed under the MIT license - see the LICENSE file for details - you are free to use, modify, and distribute this project,
+This project is licensed under the [MIT License](LICENSE) .You are free to use, modify, and distribute this project,
 provided that the original license and copyright notice are included.
